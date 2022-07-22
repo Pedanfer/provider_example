@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:johanes_provider/widgets/ask_todo_dialog.dart';
-import 'package:johanes_provider/main.dart';
+import '../widgets/ask_todo_dialog.dart';
+import '../main.dart';
+
+import '../widgets/todo_list.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [Container(), Container()];
+    final tabs = [TodoListWidget(), Container()];
     return Scaffold(
       appBar: AppBar(
         title: Text(MyApp.title),
@@ -39,9 +41,7 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: const Icon(Icons.add),
         onPressed: () => showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) => AskTodoDialog())),
+            context: context, builder: ((context) => AskTodoDialog())),
       ),
     );
   }

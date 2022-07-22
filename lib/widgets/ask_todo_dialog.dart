@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:johanes_provider/widgets/todo_form.dart';
+import '../widgets/todo_form.dart';
 
 class AskTodoDialog extends StatefulWidget {
   AskTodoDialog({Key? key}) : super(key: key);

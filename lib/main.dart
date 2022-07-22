@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:johanes_provider/views/home_page.dart';
+import '../provider/todos.dart';
+import '../views/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,12 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: title,
-      theme: ThemeData(
-          primarySwatch: Colors.pink,
-          scaffoldBackgroundColor: const Color.fromARGB(255, 241, 240, 158)),
-      home: HomePage(),
+    return ChangeNotifierProvider(
+      create: (context) => TodosProvider(),
+      child: MaterialApp(
+        title: title,
+        theme: ThemeData(
+            primarySwatch: Colors.pink,
+            scaffoldBackgroundColor: const Color.fromARGB(255, 241, 240, 158)),
+        home: HomePage(),
+      ),
     );
   }
 }

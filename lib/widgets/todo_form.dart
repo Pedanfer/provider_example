@@ -64,14 +64,14 @@ class _TodoFormState extends State<TodoForm> {
       );
 
   Widget buildSaveButton() => Padding(
-        padding: EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 30),
         child: Wrap(
           children: [
             ElevatedButton(
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black)),
               onPressed: widget.onSavedTodo,
-              child: Text('Save', textScaleFactor: 1.3),
+              child: const Text('Save', textScaleFactor: 1.3),
             ),
           ],
         ),
