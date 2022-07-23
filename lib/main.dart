@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.pink,
             scaffoldBackgroundColor: const Color.fromARGB(255, 241, 240, 158)),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }

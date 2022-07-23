@@ -5,7 +5,7 @@ import '../main.dart';
 import '../widgets/todo_list.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,7 +16,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [TodoListWidget(), Container()];
+    final tabs = [
+      const TodoListWidget(),
+      const TodoListWidget(
+        done: true,
+      )
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text(MyApp.title),
@@ -27,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.white,
         currentIndex: selectedIndex,
         onTap: (index) => setState(() {
-          index = selectedIndex;
+          selectedIndex = index;
         }),
         items: const [
           BottomNavigationBarItem(
@@ -36,12 +41,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: tabs[selectedIndex],
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 96, 94, 90),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: const Icon(Icons.add),
         onPressed: () => showDialog(
-            context: context, builder: ((context) => AskTodoDialog())),
+            context: context, builder: ((context) => const AskTodoDialog())),
       ),
     );
   }

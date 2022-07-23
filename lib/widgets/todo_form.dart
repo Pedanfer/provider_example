@@ -11,8 +11,8 @@ class TodoForm extends StatefulWidget {
 
   const TodoForm(
       {Key? key,
-      this.title = '',
-      this.description = '',
+      required this.title,
+      required this.description,
       required this.onChangedTitle,
       required this.onChangedDescription,
       required this.onSavedTodo})

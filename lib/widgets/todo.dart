@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:johanes_provider/provider/todos.dart';
+import 'package:johanes_provider/widgets/ask_todo_dialog.dart';
+import 'package:provider/provider.dart';
 import '../utils/constants.dart' as constants;
-
 import '../models/todo.dart';
 
 class TodoWidget extends StatefulWidget {
@@ -15,37 +17,42 @@ class TodoWidget extends StatefulWidget {
 
 class _TodoWidgetState extends State<TodoWidget> {
   @override
-  Widget build(BuildContext context) => Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      key: Key(widget.todo.id.toString()),
-      actions: [
-        IconSlideAction(
-            color: Colors.green,
-            caption: 'Edit',
-            onTap: () {},
-            icon: Icons.edit)
-      ],
-      secondaryActions: [
-        IconSlideAction(
-            color: Colors.red,
-            caption: 'Delete',
-            onTap: () {},
-            icon: Icons.delete)
-      ],
-      child: buildTodo());
+  Widget build(BuildContext context) => ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Slidable(
+            actionPane: const SlidableDrawerActionPane(),
+            key: Key(widget.todo.id.toString()),
+            actions: [
+              IconSlideAction(
+                  color: Colors.green,
+                  caption: 'Edit',
+                  onTap: updateTodo,
+                  icon: Icons.edit)
+            ],
+            secondaryActions: [
+              IconSlideAction(
+                  color: Colors.red,
+                  caption: 'Delete',
+                  onTap: deleteTodo,
+                  icon: Icons.delete)
+            ],
+            child: buildTodo()),
+      );
 
   Widget buildTodo() {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Row(
         children: [
           Checkbox(
             activeColor: Theme.of(context).primaryColor,
             checkColor: Colors.white,
             value: widget.todo.isDone,
-            onChanged: (value) {
-              widget.todo.isDone = value!;
+            onChanged: (_) {
+              final todosProvider =
+                  Provider.of<TodosProvider>(context, listen: false);
+              todosProvider.toggleTodoStatus(widget.todo);
             },
           ),
           SizedBox(width: constants.screenSize.width * 0.1),
@@ -62,9 +69,9 @@ class _TodoWidgetState extends State<TodoWidget> {
                 ),
                 if (widget.todo.description.isNotEmpty)
                   Container(
-                    margin: EdgeInsets.only(top: 4),
+                    margin: const EdgeInsets.only(top: 4),
                     child: Text(widget.todo.description,
-                        style: TextStyle(fontSize: 20, height: 1.5)),
+                        style: const TextStyle(fontSize: 20, height: 1.5)),
                   )
               ],
             ),
@@ -72,5 +79,16 @@ class _TodoWidgetState extends State<TodoWidget> {
         ],
       ),
     );
+  }
+
+  void deleteTodo() {
+    final todosProvider = Provider.of<TodosProvider>(context, listen: false);
+    todosProvider.removeTodo(widget.todo);
+  }
+
+  void updateTodo() {
+    showDialog(
+        context: context,
+        builder: ((context) => AskTodoDialog(todo: widget.todo)));
   }
 }
